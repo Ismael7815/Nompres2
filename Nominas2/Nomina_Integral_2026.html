@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nómina Integral 2026 — ISR, IMSS, INFONAVIT y Contribuciones Locales</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Spline+Sans+Mono:wght@500;600&display=swap');
+
+  :root{
+    --navy:#122238;
+    --navy-2:#1b3453;
+    --primary:#234a7d;
+    --primary-soft:#e9f0f8;
+    --accent:#e07b39;      /* naranja */
+    --accent-soft:#fcefe3;
+    --purple:#6c4ea3;      /* morado */
+    --purple-soft:#efeaf7;
+    --blue:#2f6fb0;        /* azul (estatus) */
+    --blue-soft:#e7f0f9;
+    --bg:#f6f7f9;
+    --card:#ffffff;
+    --text:#192536;
+    --muted:#5c6878;
+    --line:#e4e8ed;
+    --shadow:0 10px 40px rgba(18,34,56,.10);
+    --radius:16px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:var(--navy);
+    color:var(--text);
+    overflow:hidden;
+  }
+  .mono{font-family:'Spline Sans Mono',ui-monospace,monospace}
+
+  /* ---------- deck shell ---------- */
+  .deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+  .slide{
+    position:absolute;inset:0;
+    display:none;
+    flex-direction:column;
+    padding:clamp(24px,3.4vw,54px) clamp(30px,4.6vw,78px) clamp(72px,7.5vw,100px);
+    background:var(--bg);
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .45s ease, transform .45s ease;
+    overflow:hidden;
+  }
+  .slide.active{display:flex;opacity:1;transform:none;}
+  .slide.active .reveal{animation:rise .55s cubic-bezier(.2,.7,.2,1) both;}
+  .slide.active .reveal:nth-child(2){animation-delay:.06s}
+  .slide.active .reveal:nth-child(3){animation-delay:.12s}
+  .slide.active .reveal:nth-child(4){animation-delay:.18s}
+  .slide.active .reveal:nth-child(5){animation-delay:.24s}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  /* ---------- typography ---------- */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:clamp(11px,1vw,13px);font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--accent);border-radius:2px}
+  h1{font-size:clamp(30px,4.3vw,62px);font-weight:900;line-height:1.04;letter-spacing:-.02em;color:var(--navy)}
+  h2{font-size:clamp(23px,2.9vw,40px);font-weight:800;line-height:1.1;letter-spacing:-.015em;color:var(--navy)}
+  h3{font-size:clamp(15px,1.4vw,19px);font-weight:700;color:var(--navy)}
+  p.lead{font-size:clamp(15px,1.5vw,20px);color:var(--muted);line-height:1.5;max-width:60ch}
+  .slide-head{margin-bottom:clamp(14px,1.7vw,26px);flex:none}
+  .slide-body{
+    flex:1;min-height:0;display:flex;flex-direction:column;
+    justify-content:center;justify-content:safe center;
+    overflow-y:auto;overflow-x:hidden;
+  }
+  .slide-body::-webkit-scrollbar{width:6px}
+  .slide-body::-webkit-scrollbar-thumb{background:#d4dae1;border-radius:3px}
+
+  /* ---------- section divider ---------- */
+  .divider{
+    background:linear-gradient(135deg,#eef3fa 0%,#ffffff 62%);
+    color:var(--text);justify-content:center;
+  }
+  .divider .seg-no{
+    font-size:clamp(70px,16vw,220px);font-weight:900;line-height:.8;letter-spacing:-.04em;
+    color:transparent;-webkit-text-stroke:2px rgba(35,74,125,.16);
+    position:absolute;right:clamp(30px,5vw,90px);top:clamp(20px,4vw,60px);
+  }
+  .divider .eyebrow{color:var(--accent)}
+  .divider h1{color:var(--navy);max-width:18ch}
+  .divider .seg-points{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px 10px;max-width:60ch}
+  .divider .seg-points span{
+    font-size:clamp(12px,1.1vw,15px);font-weight:600;color:var(--primary);
+    background:#fff;border:1px solid #d7e2ef;
+    padding:8px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(18,34,56,.05);
+  }
+
+  /* ---------- cover ---------- */
+  .cover{background:linear-gradient(135deg,#eef3fa 0%,#ffffff 55%,#fbf1e8 100%);color:var(--text);justify-content:center;position:relative}
+  .cover::before{content:"";position:absolute;inset:0;background:radial-gradient(58% 70% at 92% 8%, rgba(224,123,57,.12), transparent 62%);pointer-events:none}
+  .cover .eyebrow{color:var(--accent)}
+  .cover h1{color:var(--navy);max-width:20ch}
+  .cover .sub{margin-top:22px;font-size:clamp(15px,1.6vw,21px);color:var(--muted);max-width:52ch;line-height:1.5}
+  .cover .pillrow{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px}
+  .cover .pillrow span{font-size:clamp(12px,1.1vw,15px);font-weight:600;color:var(--primary);background:var(--primary-soft);border:1px solid #cfe0f0;padding:9px 16px;border-radius:999px}
+  .cover .foot{color:var(--muted);font-size:13px;margin-top:36px;display:block;line-height:1.6}
+  .cover .foot b{color:var(--navy);font-weight:700}
+
+  /* ---------- grids & cards ---------- */
+  .grid{display:grid;gap:clamp(12px,1.3vw,20px)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(16px,1.6vw,26px);box-shadow:0 2px 10px rgba(18,34,56,.04);
+  }
+  .card .ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:20px}
+  .card h3{margin-bottom:6px}
+  .card p{font-size:clamp(13px,1.15vw,15px);color:var(--muted);line-height:1.45}
+  .tint-primary{background:var(--primary-soft);color:var(--primary)}
+  .tint-accent{background:var(--accent-soft);color:var(--accent)}
+  .tint-purple{background:var(--purple-soft);color:var(--purple)}
+  .tint-blue{background:var(--blue-soft);color:var(--blue)}
+
+  .bar-primary{border-top:4px solid var(--primary)}
+  .bar-accent{border-top:4px solid var(--accent)}
+  .bar-purple{border-top:4px solid var(--purple)}
+  .bar-blue{border-top:4px solid var(--blue)}
+
+  /* ---------- big stat ---------- */
+  .stat{font-size:clamp(40px,6vw,88px);font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--navy)}
+  .stat.accent{color:var(--accent)}
+  .stat.purple{color:var(--purple)}
+  .stat.primary{color:var(--primary)}
+  .stat-label{font-size:clamp(13px,1.2vw,16px);color:var(--muted);font-weight:600;margin-top:10px}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:clamp(12px,1.12vw,15px)}
+  thead th{
+    background:var(--navy);color:#fff;font-weight:700;text-align:left;
+    padding:11px 14px;font-size:clamp(11px,1.02vw,13.5px);letter-spacing:.01em;
+  }
+  thead th:first-child{border-top-left-radius:12px}
+  thead th:last-child{border-top-right-radius:12px}
+  tbody td{padding:9px 14px;border-bottom:1px solid var(--line);color:var(--text)}
+  tbody tr:nth-child(even){background:#fafbfc}
+  tbody tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-family:'Spline Sans Mono',monospace;font-weight:600}
+  .twrap{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(18,34,56,.04)}
+  tr.hot td{background:var(--accent-soft)!important;font-weight:700;color:#9a4e17}
+  .twrap.tight table{font-size:clamp(11.5px,1vw,13.5px)}
+  .twrap.tight thead th{padding:7px 12px}
+  .twrap.tight tbody td{padding:5px 12px}
+
+  /* chips / badges */
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
+  .b-si{background:var(--purple-soft);color:var(--purple)}
+  .b-no{background:var(--blue-soft);color:var(--blue)}
+  .b-parc{background:var(--accent-soft);color:#b45f20}
+
+  /* timeline */
+  .tl{display:flex;gap:0;align-items:stretch;margin-top:10px}
+  .tl .step{flex:1;text-align:center;position:relative;padding:0 6px}
+  .tl .dot{width:100%;height:4px;background:var(--line);border-radius:4px;position:relative;margin-bottom:16px}
+  .tl .step.on .dot{background:linear-gradient(90deg,var(--accent),var(--accent))}
+  .tl .yr{font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--navy)}
+  .tl .big{font-size:clamp(26px,3.4vw,48px);font-weight:900;color:var(--primary);letter-spacing:-.02em;line-height:1}
+  .tl .big.final{color:var(--accent)}
+  .tl .u{font-size:11px;color:var(--muted);font-weight:600}
+
+  /* callout */
+  .callout{
+    background:linear-gradient(100deg,var(--accent-soft),#fff);
+    border:1px solid #f0d6bf;border-left:6px solid var(--accent);
+    border-radius:14px;padding:clamp(18px,2vw,30px);
+  }
+  .callout h3{color:#a9541c;font-size:clamp(16px,1.6vw,22px);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  .callout p{font-size:clamp(14px,1.3vw,17px);color:#4a3322;line-height:1.5}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.6vw,26px);align-items:start}
+  ul.clean{list-style:none;display:block}
+  ul.clean li{
+    position:relative;padding-left:20px;margin-bottom:10px;
+    font-size:clamp(13px,1.15vw,15.5px);color:var(--text);line-height:1.45;
+  }
+  ul.clean li:last-child{margin-bottom:0}
+  ul.clean li::before{
+    content:"";position:absolute;left:0;top:.52em;
+    width:8px;height:8px;border-radius:2.5px;background:var(--accent);
+  }
+  ul.clean li b{color:var(--navy)}
+
+  .kv{display:flex;flex-direction:column;gap:3px}
+  .kv .k{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .kv .v{font-size:clamp(20px,2.4vw,34px);font-weight:900;color:var(--navy);letter-spacing:-.02em}
+
+  .note{font-size:clamp(11px,1vw,13px);color:var(--muted);margin-top:14px;line-height:1.4}
+
+  /* fuentes */
+  .src-card h3{margin-bottom:12px;padding-bottom:9px;border-bottom:2px solid var(--line)}
+  .srclist{display:flex;flex-direction:column;gap:8px}
+  .srclist a,.srclist span.nolink{
+    display:block;text-decoration:none;
+    font-size:clamp(11.5px,1.05vw,14px);line-height:1.35;
+  }
+  .srclist a{color:var(--primary);font-weight:600;transition:color .15s ease}
+  .srclist a:hover{color:var(--accent)}
+  .srclist a::before{content:"↗ ";font-weight:700;color:var(--accent)}
+  .srclist span.nolink{color:var(--text);font-weight:600}
+  .srclist em{display:block;font-style:normal;font-size:11px;color:var(--muted);font-weight:500;margin-top:1px}
+  .fnd{font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--primary);font-weight:600}
+
+  /* ---------- chrome: nav, progress, counter ---------- */
+  .topbar{position:fixed;top:0;left:0;right:0;height:5px;background:rgba(18,34,56,.08);z-index:40}
+  .topbar .fill{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .4s ease}
+  .counter{
+    position:fixed;left:clamp(18px,3vw,42px);bottom:clamp(16px,2.4vw,30px);z-index:40;
+    font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.03em;
+  }
+  .counter b{color:var(--navy)}
+  .copyright{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:clamp(16px,2.4vw,30px);z-index:40;
+    font-size:11px;font-weight:700;letter-spacing:.16em;color:#8d99a8;
+  }
+  .nav{position:fixed;right:clamp(18px,3vw,42px);bottom:clamp(44px,5vw,66px);z-index:41;display:flex;gap:8px}
+  .nav button{
+    width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;
+    color:var(--navy);font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    box-shadow:var(--shadow);transition:transform .15s ease,background .15s ease;
+  }
+  .nav button:hover{background:var(--navy);color:#fff;transform:translateY(-2px)}
+  .nav button:disabled{opacity:.35;cursor:default;transform:none;background:#fff;color:var(--navy)}
+  @media (max-width:760px){
+    .g2,.g3,.g4{grid-template-columns:1fr}
+    .split{grid-template-columns:1fr}
+    .tl{flex-wrap:wrap;gap:14px}
+    .tl .step{flex:1 1 30%}
+    .divider .seg-no{position:static;margin-bottom:10px}
+  }
+</style>
+</head>
+<body>
+<div class="topbar"><div class="fill" id="fill"></div></div>
+<div class="deck" id="deck">
+
+  <!-- 1 COVER -->
+  <section class="slide cover active">
+    <div class="reveal eyebrow" style="color:var(--accent)">Documento de síntesis técnica · Ejercicio fiscal 2026</div>
+    <h1 class="reveal">Nómina Integral 2026</h1>
+    <div class="reveal sub">Marco laboral, ISR, Seguro Social, INFONAVIT y contribuciones locales. Parámetros vigentes y reformas aplicables al procesamiento de la nómina en México.</div>
+    <div class="reveal pillrow">
+      <span>Marco Laboral · Reforma 40 hrs</span>
+      <span>ISR · Subsidio para el Empleo</span>
+      <span>IMSS · INFONAVIT</span>
+      <span>Impuesto sobre Remuneraciones</span>
+    </div>
+    <div class="reveal foot">
+      <b>UMA 2026:</b> $117.31 diarios &nbsp;·&nbsp; <b>SMG:</b> $315.04 &nbsp;·&nbsp; <b>Tope 25 UMA:</b> $2,932.75
+    </div>
+  </section>
+
+  <!-- 2 AGENDA -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Contenido</div>
+      <h2>Cuatro ejes del cálculo de nómina</h2>
+    </div>
+    <div class="slide-body">
+      <div class="grid g4 reveal">
+        <div class="card bar-primary"><div class="ic tint-primary">⚖️</div><h3>I. Marco Laboral</h3><p>CPEUM 123-A, LFT, prestaciones mínimas, descuentos, prescripción y la reforma de jornada 2026–2030.</p></div>
+        <div class="card bar-accent"><div class="ic tint-accent">🧾</div><h3>II. ISR</h3><p>Base gravable, ingresos exentos, Subsidio para el Empleo 2026, cálculo anual y timbrado del CFDI.</p></div>
+        <div class="card bar-purple"><div class="ic tint-purple">🏥</div><h3>III. IMSS e INFONAVIT</h3><p>Obligaciones patronales, integración del SBC, límites, cuotas obrero-patronales y crédito de vivienda.</p></div>
+        <div class="card bar-blue"><div class="ic tint-blue">🏛️</div><h3>IV. ISN local</h3><p>Impuesto sobre remuneraciones: tasas aplicables en las 32 entidades federativas para 2026.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 DIVIDER I -->
+  <section class="slide divider">
+    <div class="seg-no">I</div>
+    <div class="reveal eyebrow">Sección I</div>
+    <h1 class="reveal">Marco laboral y reforma de la jornada 2026</h1>
+    <div class="reveal seg-points">
+      <span>Fundamento constitucional (Art. 123-A)</span>
+      <span>Prestaciones mínimas de ley</span>
+      <span>Descuentos permitidos</span>
+      <span>Plazos de prescripción</span>
+      <span>Reducción a 40 horas · Registro electrónico</span>
+    </div>
+  </section>
+
+  <!-- 4 MARCO JURIDICO -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Fundamento</div>
+      <h2>Jerarquía del marco jurídico laboral</h2>
+    </div>
+    <div class="slide-body">
+      <div class="grid reveal" style="grid-template-columns:1.1fr 1fr 1fr;align-items:stretch">
+        <div class="card bar-navy" style="border-top:4px solid var(--navy)">
+          <div class="ic" style="background:var(--navy);color:#fff">📜</div>
+          <h3>CPEUM — Artículo 123</h3>
+          <p>Norma suprema del trabajo subordinado. <b>Apartado A</b> rige la relación obrero-patronal del sector privado.</p>
+        </div>
+        <div class="card bar-primary">
+          <div class="ic tint-primary">A</div>
+          <h3>Apartado A</h3>
+          <p>LFT · IMSS · INFONAVIT — trabajadores al servicio de patrones particulares.</p>
+        </div>
+        <div class="card bar-purple">
+          <div class="ic tint-purple">B</div>
+          <h3>Apartado B</h3>
+          <p>LFTSE · ISSSTE · FOVISSSTE — trabajadores al servicio del Estado.</p>
+        </div>
+      </div>
+      <div class="note reveal">La nómina del sector privado se construye sobre el Apartado A: jornada, salario, descansos, PTU y protección a la maternidad.</div>
+    </div>
+  </section>
+
+  <!-- 5 JORNADA Y DESCANSOS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">CPEUM 123-A · LFT</div>
+      <h2>Bases de jornada, salario y protección</h2>
+    </div>
+    <div class="slide-body">
+      <div class="grid g4 reveal" style="margin-bottom:18px">
+        <div class="card"><div class="kv"><span class="k">Jornada diurna</span><span class="v">8 <small style="font-size:14px;color:var(--muted)">hrs</small></span></div></div>
+        <div class="card"><div class="kv"><span class="k">Jornada nocturna</span><span class="v">7 <small style="font-size:14px;color:var(--muted)">hrs</small></span></div></div>
+        <div class="card"><div class="kv"><span class="k">Jornada mixta</span><span class="v">7.5 <small style="font-size:14px;color:var(--muted)">hrs</small></span></div></div>
+        <div class="card"><div class="kv"><span class="k">Descanso / 6 días</span><span class="v">1 <small style="font-size:14px;color:var(--muted)">día</small></span></div></div>
+      </div>
+      <div class="split reveal">
+        <ul class="clean">
+          <li><b>Salario mínimo</b> remunerador, exceptuado de embargo, compensación o descuento.</li>
+          <li><b>A trabajo igual, salario igual</b> — pago en moneda de curso legal.</li>
+          <li><b>PTU</b> y reparto de utilidades como derecho constitucional.</li>
+        </ul>
+        <ul class="clean">
+          <li><b>Menores de 15 años:</b> prohibido el trabajo. <b>Menores de 18:</b> sin tiempo extraordinario.</li>
+          <li><b>Maternidad:</b> sin labores peligrosas, incapacidad pre y postnatal, dos periodos de lactancia de ½ hora.</li>
+          <li><b>Condiciones nulas (Art. 5 LFT):</b> jornada inhumana, salario inferior al mínimo o pago mayor a una semana.</li>
+        </ul>
+      </div>
+      <div class="note reveal">Reforma DOF 3-mar-2026 · Condiciones de trabajo por escrito en dos ejemplares (Arts. 24 y 25 LFT), incluyendo designación de beneficiarios (Art. 501).</div>
+    </div>
+  </section>
+
+  <!-- 6 PRESTACIONES MINIMAS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 76–162 LFT</div>
+      <h2>Prestaciones mínimas de ley</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="twrap">
+        <table>
+          <thead><tr><th>Concepto</th><th>Monto mínimo / porcentaje</th><th>Fundamento</th></tr></thead>
+          <tbody>
+            <tr><td>Aguinaldo</td><td>15 días de salario por año</td><td class="fnd">Art. 87 LFT</td></tr>
+            <tr><td>Prima vacacional</td><td>25% sobre el salario de vacaciones</td><td class="fnd">Art. 80 LFT</td></tr>
+            <tr><td>Prima dominical</td><td>25% sobre la cuota diaria</td><td class="fnd">Art. 71 LFT</td></tr>
+            <tr><td>Horas extra dobles</td><td>200% total de la cuota por hora</td><td class="fnd">Art. 67 LFT</td></tr>
+            <tr><td>Horas extra triples</td><td>300% total de la cuota por hora</td><td class="fnd">Art. 68 LFT</td></tr>
+            <tr><td>Descansos trabajados</td><td>200% adicional sobre la cuota diaria</td><td class="fnd">Art. 74 LFT</td></tr>
+            <tr><td>PTU</td><td>10% sobre la base de ISR</td><td class="fnd">Art. 117 LFT</td></tr>
+            <tr><td>Prima de antigüedad</td><td>12 días de salario por año de servicio</td><td class="fnd">Art. 162 LFT</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">Sueldos y salarios: convenidos, nunca menores al Salario Mínimo (Art. 82 LFT). Vacaciones conforme a tabla de antigüedad (Art. 76).</div>
+    </div>
+  </section>
+
+  <!-- 7 VACACIONES DIGNAS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 76 LFT · vigente desde 2023</div>
+      <h2>Vacaciones dignas por antigüedad</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid" style="grid-template-columns:repeat(9,1fr);gap:10px;text-align:center">
+        <div class="card" style="padding:16px 8px"><div class="stat primary" style="font-size:clamp(26px,3.4vw,44px)">12</div><div class="stat-label" style="margin-top:4px">1 año</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat primary" style="font-size:clamp(26px,3.4vw,44px)">14</div><div class="stat-label" style="margin-top:4px">2 años</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat primary" style="font-size:clamp(26px,3.4vw,44px)">16</div><div class="stat-label" style="margin-top:4px">3 años</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat primary" style="font-size:clamp(26px,3.4vw,44px)">18</div><div class="stat-label" style="margin-top:4px">4 años</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat accent" style="font-size:clamp(26px,3.4vw,44px)">20</div><div class="stat-label" style="margin-top:4px">5 años</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat accent" style="font-size:clamp(26px,3.4vw,44px)">22</div><div class="stat-label" style="margin-top:4px">6–10</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat accent" style="font-size:clamp(26px,3.4vw,44px)">24</div><div class="stat-label" style="margin-top:4px">11–15</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat accent" style="font-size:clamp(26px,3.4vw,44px)">26</div><div class="stat-label" style="margin-top:4px">16–20</div></div>
+        <div class="card" style="padding:16px 8px"><div class="stat accent" style="font-size:clamp(26px,3.4vw,44px)">28</div><div class="stat-label" style="margin-top:4px">21–25</div></div>
+      </div>
+      <div class="note">A partir del 6.º año se suman 2 días por cada 5 años de servicio. Días de vacaciones por antigüedad cumplida.</div>
+    </div>
+  </section>
+
+  <!-- 8 DESCANSOS OBLIGATORIOS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 74 LFT</div>
+      <h2>Días de descanso obligatorio</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid g4">
+        <div class="card bar-primary"><h3>1 de enero</h3><p>Año nuevo</p></div>
+        <div class="card bar-primary"><h3>1.er lunes de febrero</h3><p>Conmemoración del 5 de febrero</p></div>
+        <div class="card bar-primary"><h3>3.er lunes de marzo</h3><p>Conmemoración del 21 de marzo</p></div>
+        <div class="card bar-primary"><h3>1 de mayo</h3><p>Día del trabajo</p></div>
+        <div class="card bar-accent"><h3>16 de septiembre</h3><p>Independencia</p></div>
+        <div class="card bar-accent"><h3>3.er lunes de noviembre</h3><p>Conmemoración del 20 de noviembre</p></div>
+        <div class="card bar-accent"><h3>25 de diciembre</h3><p>Navidad</p></div>
+        <div class="card bar-purple"><h3>Transmisión / jornada electoral</h3><p>1 de octubre cada 6 años y días que fijen las leyes electorales</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 REFORMA JORNADA -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 123-A Fracc. IV · Art. 59 LFT</div>
+      <h2>Reducción gradual a 40 horas semanales</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="tl">
+        <div class="step on"><div class="dot"></div><div class="yr">2026</div><div class="big">48</div><div class="u">hrs/semana</div></div>
+        <div class="step on"><div class="dot"></div><div class="yr">2027</div><div class="big">46</div><div class="u">hrs/semana</div></div>
+        <div class="step on"><div class="dot"></div><div class="yr">2028</div><div class="big">44</div><div class="u">hrs/semana</div></div>
+        <div class="step on"><div class="dot"></div><div class="yr">2029</div><div class="big">42</div><div class="u">hrs/semana</div></div>
+        <div class="step on"><div class="dot"></div><div class="yr">2030</div><div class="big final">40</div><div class="u">hrs/semana</div></div>
+      </div>
+      <div class="callout reveal" style="margin-top:28px">
+        <h3>🛡️ Garantía salarial</h3>
+        <p>En ningún caso la reducción de la jornada implicará la disminución de sueldos, salarios o prestaciones de las personas trabajadoras. <span class="fnd">(Transitorios 4.º Constitucional y 7.º LFT)</span></p>
+      </div>
+      <div class="note reveal">Reforma constitucional (Art. 123-A, fracc. IV y XI) publicada en el DOF el <b>03/marzo/2026</b>. Reforma reglamentaria a la LFT (arts. 58, 59, 61, 66, 67, 68, 69, 71, 132 y 994) publicada en el DOF el <b>01/mayo/2026</b>. 2026 opera como periodo de adecuación en 48 horas; la reducción efectiva inicia en 2027.</div>
+    </div>
+  </section>
+
+  <!-- 10 HORAS EXTRA -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Arts. 66 y 68 LFT</div>
+      <h2>Horas extra: límites y gradualidad</h2>
+    </div>
+    <div class="slide-body">
+      <div class="split reveal">
+        <div>
+          <h3 style="margin-bottom:12px">Límite de horas extra dobles por semana</h3>
+          <div class="tl">
+            <div class="step on"><div class="dot"></div><div class="yr">2026</div><div class="big" style="font-size:clamp(22px,2.8vw,38px)">9</div></div>
+            <div class="step on"><div class="dot"></div><div class="yr">2027</div><div class="big" style="font-size:clamp(22px,2.8vw,38px)">9</div></div>
+            <div class="step on"><div class="dot"></div><div class="yr">2028</div><div class="big" style="font-size:clamp(22px,2.8vw,38px)">10</div></div>
+            <div class="step on"><div class="dot"></div><div class="yr">2029</div><div class="big" style="font-size:clamp(22px,2.8vw,38px)">11</div></div>
+            <div class="step on"><div class="dot"></div><div class="yr">2030</div><div class="big final" style="font-size:clamp(22px,2.8vw,38px)">12</div></div>
+          </div>
+        </div>
+        <ul class="clean">
+          <li><b>Máximo extraordinario:</b> 12 horas por semana, hasta 4 horas diarias en un máximo de 4 días.</li>
+          <li><b>Excedentes de horas dobles</b> se pagan como triples: 200% adicional sobre la jornada ordinaria.</li>
+          <li><b>Tope absoluto:</b> jornada ordinaria + extraordinaria nunca mayor a <b>12 horas diarias</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 REGISTRO ELECTRONICO -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 132 Fracc. XXXIV · Art. 994 LFT</div>
+      <h2>Registro electrónico de la jornada</h2>
+    </div>
+    <div class="slide-body">
+      <div class="split reveal" style="align-items:stretch">
+        <div class="card bar-primary" style="display:flex;flex-direction:column;justify-content:center">
+          <div class="kv"><span class="k">Entrada en vigor obligatoria</span><span class="v" style="color:var(--primary)">01/enero/2027</span></div>
+          <p style="margin-top:14px;color:var(--muted);font-size:15px;line-height:1.5">Obligación patronal de registrar de forma electrónica el horario de inicio y finalización de cada persona trabajadora. Hace prueba plena si se acredita acuerdo entre las partes <span class="fnd">(Quinto Transitorio LFT)</span>.</p>
+        </div>
+        <div class="card bar-accent" style="display:flex;flex-direction:column;justify-content:center">
+          <h3 style="margin-bottom:14px">Multas por incumplimiento · 250 a 5,000 UMA</h3>
+          <div class="grid g2" style="gap:12px">
+            <div><div class="stat accent" style="font-size:clamp(26px,3.3vw,44px)">$29,327</div><div class="stat-label">Mínima · 250 UMA</div></div>
+            <div><div class="stat accent" style="font-size:clamp(26px,3.3vw,44px)">$586,550</div><div class="stat-label">Máxima · 5,000 UMA</div></div>
+          </div>
+          <div class="note">Cálculo con UMA 2026 = $117.31 diarios.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 CONTRATACION -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Arts. 39-A a 39-F LFT</div>
+      <h2>Modalidades de contratación</h2>
+    </div>
+    <div class="slide-body">
+      <div class="grid g2 reveal" style="margin-bottom:16px">
+        <div class="card bar-primary">
+          <div class="ic tint-primary">⏱️</div>
+          <h3>Periodo de prueba (39-A)</h3>
+          <p>Máximo <b>30 días</b>. Ampliable hasta <b>180 días</b> solo para puestos de dirección, gerenciales o labores técnicas/profesionales especializadas.</p>
+        </div>
+        <div class="card bar-accent">
+          <div class="ic tint-accent">🎓</div>
+          <h3>Capacitación inicial (39-B)</h3>
+          <p>Máximo <b>3 meses</b>. Ampliable hasta <b>6 meses</b> para puestos de dirección o que requieran conocimientos especializados.</p>
+        </div>
+      </div>
+      <ul class="clean reveal">
+        <li>Deben constar por escrito y <b>garantizar seguridad social desde el primer día</b>; de lo contrario, se entienden por tiempo indeterminado.</li>
+        <li><b>Improrrogables</b> y no aplicables de forma simultánea, sucesiva ni en reingresos al mismo trabajador.</li>
+        <li>Al concluir, si subsiste la relación, se vuelve <b>indeterminada</b> y el tiempo cuenta para la antigüedad.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 13 DESCUENTOS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Arts. 97 y 110 LFT</div>
+      <h2>Descuentos permitidos al salario</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="split">
+        <div class="card bar-blue">
+          <h3 style="margin-bottom:12px">Art. 97 · Sobre salario mínimo</h3>
+          <ul class="clean">
+            <li>Pensiones alimenticias decretadas por autoridad.</li>
+            <li><b>Renta de vivienda (Art. 151):</b> máx. 10%.</li>
+            <li><b>Créditos INFONAVIT:</b> 20% préstamos / 30% rentas.</li>
+            <li><b>Créditos FONACOT:</b> máx. 10%.</li>
+          </ul>
+        </div>
+        <div class="card bar-purple">
+          <h3 style="margin-bottom:12px">Art. 110 · Sobre salario general</h3>
+          <ul class="clean">
+            <li><b>Deudas con el patrón:</b> máx. 30% del excedente del SM; total ≤ 1 mes de salario.</li>
+            <li><b>Renta de vivienda:</b> máx. 15%.</li>
+            <li><b>Cajas de ahorro / cooperativas:</b> 30% del excedente del SM.</li>
+            <li><b>FONACOT:</b> máx. 20% · cuotas sindicales · pensiones alimenticias.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 PRESCRIPCION -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Arts. 516–519 LFT</div>
+      <h2>Plazos de prescripción de acciones</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid g4">
+        <div class="card bar-primary"><div class="stat primary">1 <small style="font-size:16px;color:var(--muted);font-weight:700">año</small></div><h3 style="margin-top:10px">Regla general (516)</h3><p>Aguinaldo, vacaciones, prima vacacional y PTU.</p></div>
+        <div class="card bar-accent"><div class="stat accent">1 <small style="font-size:16px;color:var(--muted);font-weight:700">mes</small></div><h3 style="margin-top:10px">Art. 517</h3><p>Patrón: despedir, sancionar, descontar. Trabajador: rescisión / separación justificada.</p></div>
+        <div class="card bar-purple"><div class="stat purple">2 <small style="font-size:16px;color:var(--muted);font-weight:700">meses</small></div><h3 style="margin-top:10px">Art. 518</h3><p>Trabajador separado: reinstalación o indemnización por despido.</p></div>
+        <div class="card bar-blue"><div class="stat" style="color:var(--blue)">2 <small style="font-size:16px;color:var(--muted);font-weight:700">años</small></div><h3 style="margin-top:10px">Art. 519</h3><p>Riesgos de trabajo, beneficiarios por muerte y ejecución de sentencias.</p></div>
+      </div>
+      <div class="note">Se interrumpe por demanda/promoción ante Tribunal, solicitud de conciliación o reconocimiento del derecho (Arts. 520–521).</div>
+    </div>
+  </section>
+
+  <!-- 15 DIVIDER II -->
+  <section class="slide divider">
+    <div class="seg-no">II</div>
+    <div class="reveal eyebrow">Sección II</div>
+    <h1 class="reveal">Impuesto sobre la Renta y Subsidio para el Empleo</h1>
+    <div class="reveal seg-points">
+      <span>Base gravable (Art. 96)</span>
+      <span>Ingresos exentos (Art. 93)</span>
+      <span>Subsidio para el Empleo 2026</span>
+      <span>Cálculo anual (Art. 97)</span>
+      <span>Timbrado del CFDI (Art. 99)</span>
+    </div>
+  </section>
+
+  <!-- 16 BASE GRAVABLE -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 96 LISR</div>
+      <h2>Determinación de la base gravable</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid" style="grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:14px">
+        <div class="card bar-primary" style="text-align:center"><h3>Ingresos por sueldos y salarios</h3><p>Percepción bruta cobrada en el periodo</p></div>
+        <div class="stat" style="font-size:40px;color:var(--muted)">−</div>
+        <div class="card bar-accent" style="text-align:center"><h3>Ingresos exentos</h3><p>Art. 93 LISR + impuesto local (si la tasa ≤ 5%)</p></div>
+        <div class="stat" style="font-size:40px;color:var(--muted)">=</div>
+        <div class="card bar-purple" style="text-align:center;border-top-color:var(--purple)"><h3>Base gravable</h3><p>Se aplica la tarifa del Art. 96</p></div>
+      </div>
+      <div class="note">La disminución del impuesto local procede siempre que su tasa no exceda del 5%.</div>
+    </div>
+  </section>
+
+  <!-- 17 INGRESOS EXENTOS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 93 LISR · exenciones en UMA</div>
+      <h2>Principales ingresos exentos</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="twrap">
+        <table>
+          <thead><tr><th>Concepto</th><th>Salario mínimo</th><th>Más de salario mínimo</th><th>Límite máximo</th></tr></thead>
+          <tbody>
+            <tr><td>Horas extra dobles</td><td>100% exento</td><td>50% exento</td><td class="num">5 UMA / semana</td></tr>
+            <tr><td>Descanso trabajado</td><td>100% exento</td><td>50% exento</td><td class="num">5 UMA / semana</td></tr>
+            <tr><td>Gratificación anual (aguinaldo)</td><td>—</td><td>Exento</td><td class="num">30 UMA</td></tr>
+            <tr><td>Prima vacacional</td><td>—</td><td>Exento</td><td class="num">15 UMA</td></tr>
+            <tr><td>PTU</td><td>—</td><td>Exento</td><td class="num">15 UMA</td></tr>
+            <tr><td>Prima dominical</td><td>—</td><td>Exento</td><td class="num">1 UMA / domingo</td></tr>
+            <tr><td>Prima de antigüedad / indemnización</td><td>—</td><td>Exento</td><td class="num">90 UMA / año</td></tr>
+            <tr><td>Jubilaciones y pensiones</td><td>—</td><td>Exento</td><td class="num">15 UMA diarias</td></tr>
+            <tr><td>Horas extra triples</td><td>100% gravado</td><td>100% gravado</td><td class="num">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">Montos expresados en múltiplos de la UMA (regla legal). Valor con UMA 2026 = $117.31: 30 UMA ≈ $3,519 · 15 UMA ≈ $1,760 · 5 UMA ≈ $587 · 90 UMA ≈ $10,558.</div>
+    </div>
+  </section>
+
+  <!-- 18 SUBSIDIO PARAMETROS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Decreto presidencial 2026 · Art. Segundo</div>
+      <h2>Subsidio para el Empleo 2026</h2>
+    </div>
+    <div class="slide-body">
+      <div class="grid g3 reveal" style="margin-bottom:18px">
+        <div class="card bar-primary"><div class="stat primary" style="font-size:clamp(28px,3.4vw,46px)">$11,492.66</div><div class="stat-label">Tope de ingreso mensual gravado para aplicarlo</div></div>
+        <div class="card bar-accent"><div class="stat accent" style="font-size:clamp(28px,3.4vw,46px)">15.02%</div><div class="stat-label">De la UMA mensual · feb–dic 2026 (15.59% en enero)</div></div>
+        <div class="card bar-purple"><div class="stat purple" style="font-size:clamp(28px,3.4vw,46px)">$535.65</div><div class="stat-label">Subsidio mensual máximo · feb–dic 2026</div></div>
+      </div>
+      <div class="twrap reveal">
+        <table>
+          <thead><tr><th>Periodo</th><th>UMA mensual</th><th class="num">Factor</th><th class="num">Subsidio mensual</th></tr></thead>
+          <tbody>
+            <tr><td>Enero 2026 <span class="fnd">(2.º Transitorio)</span></td><td class="num">$3,439.46</td><td class="num">15.59%</td><td class="num">$536.21</td></tr>
+            <tr class="hot"><td>Febrero a diciembre 2026</td><td class="num">$3,566.22</td><td class="num">15.02%</td><td class="num">$535.65</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">Aplica a sector privado, público y fuerzas armadas. No aplica a indemnizaciones, retiro ni prima de antigüedad.</div>
+    </div>
+  </section>
+
+  <!-- 19 REGLA NO DEVOLUCION -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. Segundo Decreto</div>
+      <h2>Regla crítica: no devolución del excedente</h2>
+    </div>
+    <div class="slide-body">
+      <div class="callout reveal">
+        <h3>⚠️ Si el ISR a cargo es menor que el subsidio</h3>
+        <p>La diferencia <b>no se entrega al trabajador en efectivo</b> ni se acredita contra impuestos futuros. <b>La diferencia se pierde.</b></p>
+      </div>
+      <div class="grid reveal" style="grid-template-columns:repeat(3,1fr);margin-top:24px;text-align:center">
+        <div class="card"><div class="stat-label" style="margin:0 0 6px">ISR del mes</div><div class="stat" style="font-size:clamp(26px,3vw,40px)">$180.00</div></div>
+        <div class="card bar-accent"><div class="stat-label" style="margin:0 0 6px">Subsidio mensual</div><div class="stat accent" style="font-size:clamp(26px,3vw,40px)">$535.65</div></div>
+        <div class="card bar-purple"><div class="stat-label" style="margin:0 0 6px">Diferencia que se pierde</div><div class="stat purple" style="font-size:clamp(26px,3vw,40px)">$355.65</div></div>
+      </div>
+      <div class="note reveal">Ejemplo ilustrativo de elaboración propia con el subsidio mensual máximo de febrero a diciembre de 2026.</div>
+    </div>
+  </section>
+
+  <!-- 20 PERIODOS MENORES A UN MES -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. Segundo Decreto</div>
+      <h2>Prorrateo en periodos menores a un mes</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="split" style="align-items:stretch">
+        <div class="card bar-primary" style="display:flex;flex-direction:column;justify-content:center">
+          <div class="stat-label" style="margin:0">Fórmula del subsidio diario</div>
+          <div class="mono" style="font-size:clamp(15px,1.5vw,20px);font-weight:600;color:var(--navy);margin:14px 0;line-height:1.6">
+            ($535.65 × ... ) ÷ 30.4<br>= <span style="color:var(--accent)">$17.62</span> diarios
+          </div>
+          <p style="color:var(--muted);font-size:14px">UMA mensual × 15.02% ÷ 30.4 días. Luego se multiplica por los días del periodo.</p>
+        </div>
+        <div class="twrap">
+          <table>
+            <thead><tr><th>Periodo</th><th class="num">Días</th><th class="num">Subsidio</th></tr></thead>
+            <tbody>
+              <tr><td>Semanal</td><td class="num">7</td><td class="num">$123.34</td></tr>
+              <tr><td>Decenal</td><td class="num">10</td><td class="num">$176.20</td></tr>
+              <tr><td>Catorcenal</td><td class="num">14</td><td class="num">$246.69</td></tr>
+              <tr><td>Quincenal</td><td class="num">15</td><td class="num">$264.31</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="note">El subsidio del mes nunca excede el tope de $535.65. En meses de 5 semanas se ajusta la última semana para topar el beneficio y evitar subsidios indebidos.</div>
+    </div>
+  </section>
+
+  <!-- 21 DOS PATRONES + CLAVES -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. Segundo Decreto · Guía de llenado SAT</div>
+      <h2>Dos patrones y claves de nómina</h2>
+    </div>
+    <div class="slide-body">
+      <div class="split reveal">
+        <div class="card bar-blue">
+          <div class="ic tint-blue">👥</div>
+          <h3>Trabajador con dos patrones</h3>
+          <ul class="clean" style="margin-top:12px">
+            <li>Elige <b>por escrito</b> qué patrón aplicará el subsidio, antes del primer pago del año.</li>
+            <li>Los demás patrones <b>no lo aplican</b> y conservan la notificación en su contabilidad.</li>
+          </ul>
+        </div>
+        <div class="card bar-accent">
+          <div class="ic tint-accent">🔑</div>
+          <h3>Claves del catálogo SAT</h3>
+          <ul class="clean" style="margin-top:12px">
+            <li><b>Deducciones:</b> 002 ISR · 071 ajuste entregado · 107 ajuste al causado.</li>
+            <li><b>Otro tipo de pago:</b> 002 subsidio entregado · 007 ISR ajustado · 008 subsidio que no correspondía.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 CALCULO ANUAL -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 97 LISR · Art. Tercero Decreto</div>
+      <h2>Cálculo anual del impuesto</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="split" style="align-items:stretch">
+        <div class="card bar-primary" style="display:flex;flex-direction:column;justify-content:center">
+          <h3 style="margin-bottom:10px">ISR a cargo anual</h3>
+          <div class="mono" style="font-size:clamp(14px,1.3vw,17px);color:var(--navy);line-height:1.7">ISR anual (Art. 152)<br>− Subsidio causado en el año<br>= <span style="color:var(--accent)">ISR a cargo</span></div>
+          <ul class="clean" style="margin-top:16px">
+            <li><b>ISR &gt; subsidio:</b> la diferencia es el impuesto a cargo; se acreditan las retenciones.</li>
+            <li><b>ISR &lt; subsidio:</b> no hay impuesto a cargo ni se entrega cantidad alguna.</li>
+          </ul>
+        </div>
+        <div class="card bar-purple" style="display:flex;flex-direction:column;justify-content:center">
+          <h3 style="margin-bottom:10px">Saldos a favor del trabajador</h3>
+          <p style="color:var(--muted);font-size:15px;line-height:1.55">Se compensan contra la retención de diciembre y las retenciones sucesivas del año siguiente. El patrón puede compensar saldos a favor de un trabajador contra retenciones de otros que no presenten declaración anual <span class="fnd">(Art. 179 RLISR)</span>.</p>
+          <p style="color:var(--muted);font-size:14px;margin-top:12px">Obligatorio salvo ingresos &gt; $400,000, inicio/cese fuera del año o aviso del trabajador antes del 31/diciembre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 TIMBRADO CFDI -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 99 LISR · Regla 2.7.5.1 RMF 2026</div>
+      <h2>Plazos de timbrado del CFDI de nómina</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="split" style="align-items:start">
+        <div class="twrap">
+          <table>
+            <thead><tr><th>N.º de trabajadores</th><th class="num">Días hábiles para timbrar</th></tr></thead>
+            <tbody>
+              <tr><td>1 a 50</td><td class="num">3 días</td></tr>
+              <tr><td>51 a 100</td><td class="num">5 días</td></tr>
+              <tr><td>101 a 300</td><td class="num">7 días</td></tr>
+              <tr><td>301 a 500</td><td class="num">9 días</td></tr>
+              <tr class="hot"><td>Más de 500</td><td class="num">11 días</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="clean">
+          <li>Se considera fecha de expedición la del <b>pago efectivo</b> de las remuneraciones.</li>
+          <li><b>Separación / indemnización:</b> se remite al SAT a más tardar el último día hábil del mes de la erogación.</li>
+          <li>El CFDI verificado en el portal del SAT <b>sustituye al recibo impreso</b> (Art. 101 LFT).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24 DIVIDER III -->
+  <section class="slide divider">
+    <div class="seg-no">III</div>
+    <div class="reveal eyebrow">Sección III</div>
+    <h1 class="reveal">Seguro Social (IMSS) e INFONAVIT</h1>
+    <div class="reveal seg-points">
+      <span>Obligaciones del patrón</span>
+      <span>Integración del SBC (Art. 27 LSS)</span>
+      <span>Límites de cotización 2026</span>
+      <span>Cuotas obrero-patronales</span>
+      <span>Crédito de vivienda</span>
+    </div>
+  </section>
+
+  <!-- 25 OBLIGACIONES IMSS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 15 LSS</div>
+      <h2>Obligaciones del patrón ante el IMSS</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid g2" style="margin-bottom:16px">
+        <div class="card bar-primary"><div class="kv"><span class="k">Altas, bajas y modificaciones</span><span class="v" style="color:var(--primary)">5 <small style="font-size:15px;color:var(--muted)">días hábiles</small></span></div></div>
+        <div class="card bar-accent"><div class="kv"><span class="k">Conservación de nóminas / listas de raya</span><span class="v" style="color:var(--accent)">5 <small style="font-size:15px;color:var(--muted)">años</small></span></div></div>
+      </div>
+      <ul class="clean">
+        <li>Registrar la empresa e inscribir a trabajadores en el Régimen Obligatorio.</li>
+        <li><b>Autoclasificarse</b> en el Seguro de Riesgos de Trabajo (Clases I a V) y determinar su prima.</li>
+        <li>Determinar y enterar las cuotas obrero-patronales; permitir inspecciones y visitas domiciliarias.</li>
+        <li>Construcción: llevar registros por obra y entregar constancias de días trabajados.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 26 SBC INTEGRACION -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 27 LSS</div>
+      <h2>Integración del Salario Base de Cotización</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="twrap">
+        <table>
+          <thead><tr><th>Concepto</th><th>¿Integra?</th><th>Regla</th></tr></thead>
+          <tbody>
+            <tr><td>Sueldos, comisiones, aguinaldo, vacaciones, prima vac.</td><td><span class="badge b-si">Sí</span></td><td>100%</td></tr>
+            <tr><td>Horas extra triples, prima dominical, descansos trabajados</td><td><span class="badge b-si">Sí</span></td><td>100% variable</td></tr>
+            <tr><td>Bonos de productividad / gratificaciones</td><td><span class="badge b-si">Sí</span></td><td>100% variable</td></tr>
+            <tr><td>Vales de despensa</td><td><span class="badge b-parc">Parcial</span></td><td>Integra el excedente del 40% de la UMA</td></tr>
+            <tr><td>Alimentación / habitación</td><td><span class="badge b-parc">Parcial</span></td><td>Exento si se cobra mín. 20% UMA por concepto</td></tr>
+            <tr><td>Premios de asistencia / puntualidad</td><td><span class="badge b-parc">Parcial</span></td><td>Integra el excedente del 10% del SBC</td></tr>
+            <tr><td>Fondo de ahorro</td><td><span class="badge b-parc">Parcial</span></td><td>Integra el excedente de la aportación patronal</td></tr>
+            <tr><td>Horas extra simples y dobles · PTU · indemnizaciones · previsión social</td><td><span class="badge b-no">No</span></td><td>Excluidos expresamente</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 27 LIMITES COTIZACION -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Parámetros 2026</div>
+      <h2>Límites de cotización 2026</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid g3" style="gap:16px">
+        <div class="card bar-primary"><div class="stat primary" style="font-size:clamp(28px,3.4vw,46px)">$117.31</div><div class="stat-label">UMA diaria 2026</div></div>
+        <div class="card bar-accent"><div class="stat accent" style="font-size:clamp(28px,3.4vw,46px)">$2,932.75</div><div class="stat-label">Tope superior · 25 UMA diarias</div></div>
+        <div class="card bar-purple"><div class="stat purple" style="font-size:clamp(28px,3.4vw,46px)">$100.81</div><div class="stat-label">UMI INFONAVIT 2026</div></div>
+        <div class="card bar-blue"><div class="stat" style="color:var(--blue);font-size:clamp(28px,3.4vw,46px)">$315.04</div><div class="stat-label">Salario Mínimo General</div></div>
+        <div class="card bar-blue"><div class="stat" style="color:var(--blue);font-size:clamp(28px,3.4vw,46px)">$440.87</div><div class="stat-label">SMG Zona Fronteriza Norte</div></div>
+        <div class="card bar-primary" style="display:flex;align-items:center;justify-content:center"><div style="text-align:center"><div style="color:var(--navy);font-weight:800;font-size:clamp(15px,1.4vw,19px)">Límite inferior</div><div style="color:var(--muted);font-size:13px;margin-top:6px">SMG o SMG Zona Fronteriza Norte</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 28 CUOTAS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 15 LSS</div>
+      <h2>Cuotas obrero-patronales IMSS</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="twrap">
+        <table>
+          <thead><tr><th>Rama de seguro</th><th class="num">Patrón</th><th class="num">Obrero</th><th>Base</th></tr></thead>
+          <tbody>
+            <tr><td>Enfermedad y maternidad — cuota fija</td><td class="num">20.40%</td><td class="num">—</td><td>UMA</td></tr>
+            <tr><td>Enf. y maternidad — excedente (&gt;3 UMA)</td><td class="num">1.10%</td><td class="num">0.40%</td><td>Excedente</td></tr>
+            <tr><td>Enf. y maternidad — prestaciones en dinero</td><td class="num">0.70%</td><td class="num">0.25%</td><td>SBC</td></tr>
+            <tr><td>Gastos médicos pensionados</td><td class="num">1.05%</td><td class="num">0.375%</td><td>SBC</td></tr>
+            <tr><td>Invalidez y vida</td><td class="num">1.75%</td><td class="num">0.625%</td><td>SBC</td></tr>
+            <tr><td>Guarderías y prestaciones sociales</td><td class="num">1.00%</td><td class="num">—</td><td>SBC</td></tr>
+            <tr><td>Retiro</td><td class="num">2.00%</td><td class="num">—</td><td>SBC</td></tr>
+            <tr><td>Cesantía y vejez</td><td class="num">gradual*</td><td class="num">1.125%</td><td>SBC</td></tr>
+            <tr><td>Riesgos de trabajo</td><td class="num">según clase</td><td class="num">—</td><td>SBC</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">*Cuota patronal de cesantía en edad avanzada en aplicación gradual conforme a la tabla transitoria 2023–2030.</div>
+    </div>
+  </section>
+
+  <!-- 29 PRIMA RIESGO -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 18 RLSSMACERF</div>
+      <h2>Prima de Riesgo de Trabajo — clasificación inicial</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid" style="grid-template-columns:repeat(5,1fr);gap:14px;text-align:center">
+        <div class="card bar-blue"><h3>Clase I</h3><div class="stat" style="color:var(--blue);font-size:clamp(22px,2.6vw,36px);margin-top:8px">0.54%</div></div>
+        <div class="card bar-primary"><h3>Clase II</h3><div class="stat primary" style="font-size:clamp(22px,2.6vw,36px);margin-top:8px">1.13%</div></div>
+        <div class="card bar-purple"><h3>Clase III</h3><div class="stat purple" style="font-size:clamp(22px,2.6vw,36px);margin-top:8px">2.60%</div></div>
+        <div class="card bar-accent"><h3>Clase IV</h3><div class="stat accent" style="font-size:clamp(22px,2.6vw,36px);margin-top:8px">4.65%</div></div>
+        <div class="card" style="border-top:4px solid #9a4e17"><h3>Clase V</h3><div class="stat" style="color:#9a4e17;font-size:clamp(22px,2.6vw,36px);margin-top:8px">7.59%</div></div>
+      </div>
+      <div class="note">Las empresas se autoclasifican al registrarse por primera vez o al cambiar de actividad, conforme al Catálogo de Actividades. Primas medias de la clase: 0.54355% a 7.58875%.</div>
+    </div>
+  </section>
+
+  <!-- 30 INFONAVIT -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Art. 29 LINFONAVIT · Arts. 42–44 RIPAED</div>
+      <h2>Obligaciones ante el INFONAVIT</h2>
+    </div>
+    <div class="slide-body">
+      <div class="grid g2 reveal" style="margin-bottom:16px">
+        <div class="card bar-primary"><div class="kv"><span class="k">Aportación patronal</span><span class="v" style="color:var(--primary)">5% <small style="font-size:14px;color:var(--muted)">sobre el SBC</small></span></div></div>
+        <div class="card bar-accent"><div class="kv"><span class="k">Entero de descuentos por crédito</span><span class="v" style="color:var(--accent)">día 17 <small style="font-size:14px;color:var(--muted)">del mes siguiente</small></span></div></div>
+      </div>
+      <ul class="clean reveal">
+        <li>El descuento inicia al <b>día siguiente</b> de recibir el Aviso de Retención o la Cédula de Determinación (EBA), lo que ocurra primero.</li>
+        <li>Ante discrepancias entre documentos, <b>prevalecen los datos de la Cédula de Determinación (EBA)</b>.</li>
+        <li>La obligación de descontar <b>no se suspende</b> durante incapacidades o ausencias del trabajador.</li>
+        <li>Base salarial sin límite superior para la amortización del crédito de vivienda.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 31 DIVIDER IV -->
+  <section class="slide divider">
+    <div class="seg-no">IV</div>
+    <div class="reveal eyebrow">Sección IV</div>
+    <h1 class="reveal">Impuesto sobre Remuneraciones (ISN)</h1>
+    <div class="reveal seg-points">
+      <span>Contribución estatal sobre nóminas</span>
+      <span>32 entidades federativas</span>
+      <span>Comparativo de tasas 2025 vs 2026</span>
+    </div>
+  </section>
+
+  <!-- 32 ISN TASAS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Impuesto estatal sobre nóminas · 2026</div>
+      <h2>Tasas de ISN — comparativo 2025 vs 2026</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="split" style="align-items:start;gap:22px">
+        <div class="twrap tight">
+          <table>
+            <thead><tr><th>Entidad</th><th class="num">2025</th><th class="num">2026</th></tr></thead>
+            <tbody>
+              <tr><td>Aguascalientes</td><td class="num">2.50</td><td class="num">2.50</td></tr>
+              <tr><td>Baja California</td><td class="num">4.25</td><td class="num">4.25</td></tr>
+              <tr class="hot"><td>Baja California Sur</td><td class="num">2.50</td><td class="num">3.00</td></tr>
+              <tr class="hot"><td>Chiapas</td><td class="num">2.00</td><td class="num">3.00</td></tr>
+              <tr class="hot"><td>Chihuahua</td><td class="num">3.00</td><td class="num">4.00</td></tr>
+              <tr><td>Ciudad de México</td><td class="num">4.00</td><td class="num">4.00</td></tr>
+              <tr class="hot"><td>Colima</td><td class="num">2.00</td><td class="num">3.00</td></tr>
+              <tr><td>Estado de México</td><td class="num">3.00</td><td class="num">3.00</td></tr>
+              <tr><td>Guanajuato</td><td class="num">3.00</td><td class="num">3.00</td></tr>
+              <tr><td>Jalisco · Nuevo León</td><td class="num">3.00</td><td class="num">3.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="twrap tight">
+          <table>
+            <thead><tr><th>Entidad</th><th class="num">2025</th><th class="num">2026</th></tr></thead>
+            <tbody>
+              <tr class="hot"><td>Morelos</td><td class="num">2.50</td><td class="num">3.00</td></tr>
+              <tr><td>Puebla · Querétaro</td><td class="num">3.00</td><td class="num">3.00</td></tr>
+              <tr><td>Quintana Roo</td><td class="num">4.00</td><td class="num">4.00</td></tr>
+              <tr><td>San Luis Potosí</td><td class="num">3.00</td><td class="num">3.00</td></tr>
+              <tr><td>Sinaloa</td><td class="num">2.4–3.0</td><td class="num">2.4–3.0</td></tr>
+              <tr><td>Sonora</td><td class="num">3.00</td><td class="num">3.00</td></tr>
+              <tr><td>Tabasco</td><td class="num">3.0–3.5</td><td class="num">3.0–3.5</td></tr>
+              <tr class="hot"><td>Yucatán</td><td class="num">3.00</td><td class="num">3.75</td></tr>
+              <tr><td>Veracruz · Tamaulipas</td><td class="num">3.00</td><td class="num">3.00</td></tr>
+              <tr><td>Zacatecas</td><td class="num">3.50</td><td class="num">3.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="note">En naranja, las seis entidades con incremento de tasa para 2026. Porcentaje sobre la nómina.</div>
+    </div>
+  </section>
+
+  <!-- 33 RESUMEN EJECUTIVO -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Para llevar</div>
+      <h2>Puntos clave del ejercicio 2026</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid g2">
+        <div class="card bar-primary"><h3>⚖️ Jornada laboral</h3><p>48 hrs en 2026, hacia 40 hrs en 2030, sin reducir sueldos. Registro electrónico obligatorio desde el 01/enero/2027.</p></div>
+        <div class="card bar-accent"><h3>🧾 Subsidio para el Empleo</h3><p>Tope $11,492.66; factor 15.59% (ene) y 15.02% (feb–dic) = $535.65 máx. El excedente sobre el ISR se pierde.</p></div>
+        <div class="card bar-purple"><h3>🏥 SBC y cuotas</h3><p>UMA $117.31, tope 25 UMA = $2,932.75. Integración precisa de despensa (40% UMA) y premios (10% SBC).</p></div>
+        <div class="card bar-blue"><h3>🏛️ ISN estatal</h3><p>Seis entidades subieron su tasa en 2026. INFONAVIT: 5% patronal y entero de descuentos al día 17.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 34 FUENTES I -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Fuentes oficiales · consulta directa</div>
+      <h2>Leyes y reglamentos aplicables</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="split">
+        <div class="card src-card bar-primary">
+          <h3>Leyes · Cámara de Diputados (texto vigente)</h3>
+          <div class="srclist">
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/ref/cpeum.htm" target="_blank" rel="noopener">Constitución Política de los Estados Unidos Mexicanos<em>Art. 123, Apartado A</em></a>
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/ref/lft.htm" target="_blank" rel="noopener">Ley Federal del Trabajo<em>Última reforma DOF 14/mayo/2026</em></a>
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/ref/lisr.htm" target="_blank" rel="noopener">Ley del Impuesto sobre la Renta<em>Arts. 93, 96, 97 y 99</em></a>
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/ref/lss.htm" target="_blank" rel="noopener">Ley del Seguro Social<em>Última reforma DOF 15/enero/2026 · Arts. 15 y 27</em></a>
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LIFNVT.pdf" target="_blank" rel="noopener">Ley del INFONAVIT<em>Última reforma DOF 21/febrero/2025 · Art. 29</em></a>
+          </div>
+        </div>
+        <div class="card src-card bar-purple">
+          <h3>Reglamentos</h3>
+          <div class="srclist">
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LISR_060516.pdf" target="_blank" rel="noopener">Reglamento de la Ley del Impuesto sobre la Renta<em>Arts. 152, 179, 180 y 181</em></a>
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LSS_MACERF.pdf" target="_blank" rel="noopener">Reglamento de la LSS en materia de Afiliación, Clasificación de Empresas, Recaudación y Fiscalización<em>RACERF · Arts. 9, 10, 16, 18, 45 y 50</em></a>
+            <span class="nolink">Reglamento de Inscripción, Pago de Aportaciones y Entero de Descuentos al INFONAVIT<em>RIPAED · DOF 10/febrero/2012, reforma 29/septiembre/2017 · Arts. 42 a 44 — consultable en el DOF</em></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 35 FUENTES II -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Fuentes oficiales · consulta directa</div>
+      <h2>Decretos 2026, parámetros y portales</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="grid g3">
+        <div class="card src-card bar-accent">
+          <h3>Decretos y resoluciones (DOF)</h3>
+          <div class="srclist">
+            <a href="https://dof.gob.mx/nota_detalle.php?codigo=5781417&amp;fecha=03/03/2026" target="_blank" rel="noopener">Reforma constitucional · jornada laboral<em>DOF 03/marzo/2026</em></a>
+            <a href="https://dof.gob.mx/nota_detalle.php?codigo=5786537&amp;fecha=01/05/2026" target="_blank" rel="noopener">Reforma a la LFT · jornada laboral<em>DOF 01/mayo/2026</em></a>
+            <a href="https://www.dof.gob.mx/nota_detalle.php?codigo=5777649&amp;fecha=31/12/2025" target="_blank" rel="noopener">Decreto que modifica el Subsidio para el Empleo<em>DOF 31/diciembre/2025</em></a>
+            <span class="nolink">Resolución Miscelánea Fiscal 2026<em>DOF 28/diciembre/2025 · Regla 2.7.5.1 (1.ª modificación: DOF 09/julio/2026)</em></span>
+          </div>
+        </div>
+        <div class="card src-card bar-blue">
+          <h3>Parámetros del ejercicio</h3>
+          <div class="srclist">
+            <a href="https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/uma/uma2026.pdf" target="_blank" rel="noopener">UMA 2026 · INEGI<em>$117.31 diaria · $3,566.22 mensual · vigente desde 01/febrero/2026</em></a>
+            <a href="https://www.gob.mx/conasami/articulos/incremento-a-los-salarios-minimos-para-2026" target="_blank" rel="noopener">Salarios mínimos 2026 · CONASAMI<em>Resolución DOF 09/diciembre/2025</em></a>
+            <a href="https://www.gob.mx/cms/uploads/attachment/file/1041076/Tabla_de_Salarios_M_nimos_2026.pdf" target="_blank" rel="noopener">Tabla de salarios mínimos 2026<em>Generales y 61 profesionales</em></a>
+          </div>
+        </div>
+        <div class="card src-card bar-primary">
+          <h3>Portales operativos</h3>
+          <div class="srclist">
+            <a href="https://www.sat.gob.mx/consultas/97722/comprobante-de-nomina" target="_blank" rel="noopener">SAT · CFDI de nómina<em>Guía de llenado, catálogos y documentación técnica</em></a>
+            <a href="https://www.imss.gob.mx" target="_blank" rel="noopener">IMSS<em>IDSE, SUA y trámites patronales</em></a>
+            <a href="https://www.infonavit.org.mx" target="_blank" rel="noopener">INFONAVIT<em>Portal empresarial, avisos de retención y EBA</em></a>
+            <a href="https://www.dof.gob.mx" target="_blank" rel="noopener">Diario Oficial de la Federación<em>Consulta y alertas de publicaciones</em></a>
+          </div>
+        </div>
+      </div>
+      <div class="note">Ligas verificadas al 05/noviembre/2026. Confirme siempre la vigencia del texto antes de aplicarlo: los parámetros se actualizan al menos una vez al año.</div>
+    </div>
+  </section>
+
+  <!-- 36 CREDITOS -->
+  <section class="slide">
+    <div class="slide-head reveal">
+      <div class="eyebrow">Créditos y alcance</div>
+      <h2>Referencias y aviso de uso</h2>
+    </div>
+    <div class="slide-body reveal">
+      <div class="split" style="align-items:stretch">
+        <div class="card bar-purple">
+          <h3>Bibliografía consultada</h3>
+          <p style="margin-top:8px">POBLANO REYES, Luis Fernando (M.F. y L.C.C.). <b><i>Nómina Integral: ISR, IMSS, INFONAVIT y Contribuciones Locales</i></b>, 2026. Derechos reservados del autor.</p>
+          <p style="margin-top:10px">Se cita como fuente de consulta. Esta presentación <b>no reproduce ni distribuye</b> el material original, que permanece disponible con su autor; su contenido es una síntesis de elaboración propia de disposiciones legales y parámetros oficiales de aplicación general.</p>
+          <div class="srclist" style="margin-top:12px">
+            <span class="nolink">Uso y distribución<em>Documento de uso interno con fines de capacitación, sin fines de lucro y sin comercialización.</em></span>
+          </div>
+        </div>
+        <div class="card bar-accent">
+          <h3>Alcance y responsabilidad</h3>
+          <ul class="clean" style="margin-top:12px">
+            <li><b>Síntesis técnica con fines de capacitación.</b> No sustituye el texto legal vigente ni constituye asesoría particular.</li>
+            <li>Los textos legislativos y reglamentarios <b>no son objeto de protección autoral</b> (Art. 14, fracc. VIII, LFDA).</li>
+            <li>Exenciones del Art. 93 LISR expresadas en <b>múltiplos de UMA</b>, para evitar cifras desfasadas.</li>
+            <li>Parámetros con corte al <b>ejercicio fiscal 2026</b>; verifique reformas posteriores en el DOF.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 37 CIERRE -->
+  <section class="slide cover">
+    <div class="reveal eyebrow" style="color:var(--accent)">Síntesis técnica · Nómina Integral 2026</div>
+    <h1 class="reveal">Una nómina correcta integra cuatro marcos a la vez</h1>
+    <div class="reveal sub">Laboral, fiscal, de seguridad social y local. El control de parámetros vigentes —UMA, SMG, factores de subsidio y tasas estatales— es la base del cumplimiento y la deducibilidad.</div>
+    <div class="reveal pillrow">
+      <span>LFT</span><span>LISR</span><span>LSS</span><span>LINFONAVIT</span><span>ISN estatal</span>
+    </div>
+    <div class="reveal foot"><b>Documento de referencia</b> · Parámetros vigentes para el ejercicio fiscal 2026</div>
+  </section>
+
+</div>
+
+<!-- chrome -->
+<div class="nav">
+  <button id="prev" aria-label="Anterior">‹</button>
+  <button id="next" aria-label="Siguiente">›</button>
+</div>
+<div class="counter"><b id="cur">01</b> / <span id="tot">34</span></div>
+<div class="copyright">© NOV 2026 IGM</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const fill=document.getElementById('fill');
+  const cur=document.getElementById('cur');
+  const tot=document.getElementById('tot');
+  const prev=document.getElementById('prev');
+  const next=document.getElementById('next');
+  let i=0;
+  tot.textContent=String(slides.length).padStart(2,'0');
+
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    fill.style.width=((i+1)/slides.length*100)+'%';
+    cur.textContent=String(i+1).padStart(2,'0');
+    prev.disabled=(i===0);
+    next.disabled=(i===slides.length-1);
+  }
+  next.addEventListener('click',()=>show(i+1));
+  prev.addEventListener('click',()=>show(i-1));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();show(i+1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1);}
+    if(e.key==='Home'){show(0);}
+    if(e.key==='End'){show(slides.length-1);}
+  });
+  // swipe
+  let x0=null;
+  document.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>50){ dx<0?show(i+1):show(i-1); }
+    x0=null;
+  },{passive:true});
+  show(0);
+</script>
+</body>
+</html>
